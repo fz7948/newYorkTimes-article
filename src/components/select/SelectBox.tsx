@@ -2,7 +2,7 @@ import React from "react";
 // components
 import Select from "react-select";
 // types
-import { SelectPropsType, SelectBoxType } from "../../type";
+import { SelectPropsType, SelectBoxType } from "../../types";
 
 type Props = {
   labelName?: string;

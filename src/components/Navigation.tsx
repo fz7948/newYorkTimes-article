@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // icons
 import HomeIcon from "../components/icon/HomeIcon";
 import ScrapIcon from "../components/icon/ScrapIcon";
@@ -22,6 +22,7 @@ export default function Navigation() {
     <footer className="flex items-center justify-around w-full h-[85px] bg-[#000000] rounded-[30px]">
       {menu.map((item) => (
         <NavigationButton
+          key={item.href}
           iconElement={item.iconElement}
           name={item.name}
           href={item.href}
