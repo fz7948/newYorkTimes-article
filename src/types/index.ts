@@ -23,7 +23,15 @@ export const COUNTRY_TYPE = {
 export type FormType = {
   page: number;
   keyword: string;
-  beginDate: string;
-  endDate: string;
+  beginDate: Date;
+  endDate: Date;
   country: string;
+};
+
+export type DataType = {
+  id: string;
+  date: Date;
+  headline: string;
+  journalist: string;
+  source: string;
 };

@@ -19,7 +19,9 @@ export default function Navigation() {
   };
 
   return (
-    <footer className="flex items-center justify-around w-full h-[85px] bg-[#000000] rounded-[30px]">
+    <footer
+      className={`flex items-center justify-around w-full h-[85px] bg-[#000000] rounded-[30px]`}
+    >
       {menu.map((item) => (
         <NavigationButton
           key={item.href}

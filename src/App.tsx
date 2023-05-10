@@ -11,7 +11,7 @@ import Navigation from "./components/Navigation";
 function App() {
   return (
     <BrowserRouter>
-      <div className="flex flex-col w-full h-screen justify-between max-w-screen-sm mx-auto">
+      <div className="flex flex-col w-full h-screen justify-between max-w-screen-sm mx-auto bg-[#F0F1F4]">
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<HomePage />} />

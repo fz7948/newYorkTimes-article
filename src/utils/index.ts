@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 const leftPad = (value: number) => {
   if (value >= 10) {
     return value;
@@ -14,7 +16,15 @@ export const toStringByFormatting = (source: Date, delimiter = "") => {
   return [year, month, day].join(delimiter);
 };
 
+export function getDayOfWeek(source: Date) {
+  const week = ["일", "월", "화", "수", "목", "금", "토"];
+  const dayOfWeek = week[source.getDay()];
+  return dayOfWeek;
+}
+
 export const formatArticlesearchApi = (docs: any) => {
+  if (!docs) return [];
+
   const newDocs = docs.reduce((res: any, cur: any) => {
     const {
       byline: { person },
@@ -30,9 +40,10 @@ export const formatArticlesearchApi = (docs: any) => {
     return [
       ...res,
       {
+        id: uuidv4(),
         journalist: personFullName,
         headline: main,
-        date: toStringByFormatting(new Date(pub_date)),
+        date: new Date(pub_date),
         source,
       },
     ];
