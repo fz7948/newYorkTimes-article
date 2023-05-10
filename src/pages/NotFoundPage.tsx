@@ -4,7 +4,7 @@ import * as BsIcons from "react-icons/bs";
 
 export default function NotFoundPage() {
   return (
-    <section className="flex flex-col h-screen justify-center items-center text-xl font-semibold">
+    <section className="flex flex-col h-full justify-center items-center text-xl font-semibold">
       <BsIcons.BsFillExclamationTriangleFill
         className="m-4"
         size={40}
