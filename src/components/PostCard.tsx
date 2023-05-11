@@ -8,7 +8,7 @@ import StarIcon from "../components/icon/StarIcon";
 type Props = {
   item: DataType;
   onStarClick: (id: DataType) => void;
-  onCheckedById?: Set<string>;
+  onCheckedById: Set<string>;
 };
 
 export default function PostCard({ item, onStarClick, onCheckedById }: Props) {
@@ -26,9 +26,9 @@ export default function PostCard({ item, onStarClick, onCheckedById }: Props) {
         <button
           type="button"
           className="flex justify-center items-center w-[22px] h-[22px]"
-          onClick={() => (onStarClick ? onStarClick(item) : null)}
+          onClick={() => onStarClick(item)}
         >
-          <StarIcon active={onCheckedById ? onCheckedById.has(id) : true} />
+          <StarIcon active={onCheckedById.has(headline)} />
         </button>
       </div>
       <div className="flex justify-between items-center w-full h-full">

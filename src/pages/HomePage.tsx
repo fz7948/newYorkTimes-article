@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from "../redux/store";
 import Header from "../components/Header";
 import PostContainer from "../components/PostContainer";
 import Loading from "../components/Loading";
+import ModalWrapper from "../components/modal/ModalWrapper";
+import ModalItem from "../components/modal/ModalItem";
 // hooks
 import useIntersectionObserver from "../hooks/useIntersectionObserver";
 // utils
@@ -15,14 +17,12 @@ import { COUNTRY_TYPE } from "../constant";
 // redux
 import { getPostsInStorage } from "../redux/postSlice";
 // zustand
-import { useScrapStore } from "../store";
+import { useScrapStore } from "../zustand/store";
 
 export default function HomePage() {
-  // redux
   const dispatch = useAppDispatch();
   const { loading } = useAppSelector((state) => state.post);
-  // zustand
-  const { data, addScrap } = useScrapStore();
+  const { check, updateCheckInLocalStorage } = useScrapStore();
 
   const [clientData, setClientData] = React.useState<DataType[]>([]);
   const [form, setForm] = React.useState<FormType>({
@@ -32,7 +32,7 @@ export default function HomePage() {
     endDate: new Date(),
     country: COUNTRY_TYPE.all,
   });
-  const [checkedById, setCheckedById] = React.useState<Set<string>>(new Set());
+  const [isOpen, setIsOpen] = React.useState(true);
 
   const target = React.useRef<HTMLDivElement | null>(null);
   const [observe, unobserve] = useIntersectionObserver(() => {
@@ -41,17 +41,8 @@ export default function HomePage() {
     });
   });
 
-  console.log(data, "data", clientData);
-
   const handleStarIconClick = (item: DataType) => {
-    const updatedCheckedById = new Set([...checkedById]);
-    if (updatedCheckedById.has(item.id)) {
-      updatedCheckedById.delete(item.id);
-    } else {
-      updatedCheckedById.add(item.id);
-    }
-    setCheckedById(updatedCheckedById);
-    addScrap(item);
+    updateCheckInLocalStorage(item);
   };
 
   React.useEffect(() => {
@@ -59,25 +50,31 @@ export default function HomePage() {
   }, [clientData]);
 
   React.useEffect(() => {
-    dispatch(getPostsInStorage(form)) //
-      .then(({ payload }) => {
-        if (!payload && target.current) {
-          unobserve(target.current as HTMLDivElement);
-        } else {
-          setClientData([...clientData, ...formatArticlesearchApi(payload)]);
-        }
-      });
+    // dispatch(getPostsInStorage(form)) //
+    //   .then(({ payload }) => {
+    //     if (!payload && target.current) {
+    //       unobserve(target.current as HTMLDivElement);
+    //     } else {
+    //       setClientData([...clientData, ...formatArticlesearchApi(payload)]);
+    //     }
+    //   });
   }, [form.page]);
 
   return (
     <main className={`flex flex-col mx-auto w-full h-[calc(100%-85px)]`}>
       {loading && <Loading />}
+      {isOpen && (
+        <ModalWrapper
+          onClose={() => setIsOpen(false)}
+          children={<ModalItem />}
+        />
+      )}
       <Header />
       <PostContainer
         target={target}
         data={clientData}
         onStarClick={handleStarIconClick}
-        onCheckedById={checkedById}
+        onCheckedById={new Set(check)}
       />
     </main>
   );
