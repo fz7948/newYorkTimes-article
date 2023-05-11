@@ -17,6 +17,15 @@ export default function PostCard({ item, onStarClick, onCheckedById }: Props) {
   const { id, date, headline, journalist, source, web_url } = item;
   const navigate = useNavigate();
 
+  const handleStarClick = () => {
+    if (onCheckedById.has(headline)) {
+      alert("스크랩이 삭제 되었습니다.");
+    } else {
+      alert("스크랩이 추가 되었습니다.");
+    }
+    onStarClick(item);
+  };
+
   return (
     <section
       key={id}
@@ -32,7 +41,7 @@ export default function PostCard({ item, onStarClick, onCheckedById }: Props) {
         <button
           type="button"
           className="flex justify-center items-center w-[22px] h-[22px]"
-          onClick={() => onStarClick(item)}
+          onClick={handleStarClick}
         >
           <StarIcon active={onCheckedById.has(headline)} />
         </button>
