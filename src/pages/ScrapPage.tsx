@@ -11,6 +11,8 @@ import { useScrapStore } from "../zustand/store";
 import { DataType } from "../types";
 // constant
 import { MODE_TYPE } from "../constant";
+// utils
+import { toStringByFormatting } from "../utils";
 
 export default function ScrapPage() {
   const { scrapForm } = useAppSelector((state) => state.post);
@@ -25,8 +27,20 @@ export default function ScrapPage() {
   };
 
   React.useEffect(() => {
-    setFilterData(data);
-  }, [data]);
+    const filterData = data.reduce((res, cur) => {
+      const isFind = cur.headline.includes(scrapForm.keyword);
+      const isDate =
+        scrapForm.beginDate === "1970-01-01"
+          ? true
+          : toStringByFormatting(new Date(cur.date), "-") ===
+            scrapForm.beginDate;
+      if (isFind && isDate) {
+        return [...res, cur];
+      }
+      return res;
+    }, []);
+    setFilterData(filterData);
+  }, [data, scrapForm]);
 
   return (
     <main className={`flex flex-col mx-auto w-full h-[calc(100%-85px)]`}>
