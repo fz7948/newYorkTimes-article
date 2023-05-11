@@ -1,4 +1,4 @@
-export const COUNTRY_TYPE = {
+export const COUNTRY_TYPE: { [key: string]: string } = {
   all: "*",
   south_korea: "SOUTH KOREA",
   china: "CHINA",
@@ -19,4 +19,4 @@ export const KOREA_COUNTRY_TYPE = {
   russia: "러시아",
   france: "프랑스",
   united_kingdom: "영국",
-};
+} as const;

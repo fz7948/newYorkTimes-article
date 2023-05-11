@@ -9,10 +9,9 @@ export interface SelectBoxType {
 }
 
 export type FormType = {
-  page: number;
   keyword: string;
-  beginDate: Date;
-  endDate: Date;
+  beginDate: string;
+  endDate: string;
   country: string;
 };
 

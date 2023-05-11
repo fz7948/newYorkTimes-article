@@ -1,10 +1,15 @@
 import React from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import cx from "classnames";
 // components
 import BaseCalendar from "../calendar/BaseCalendar";
 import TextInput from "../input/TextInput";
 // constant
 import { COUNTRY_TYPE, KOREA_COUNTRY_TYPE } from "../../constant";
+// redux
+import { setFormState } from "../../redux/postSlice";
+// utils
+import { toStringByFormatting } from "../../utils";
 
 const COUNTRY_BUTTON_CLASS = [
   "px-3",
@@ -18,7 +23,16 @@ type FormType = {
   value: string | undefined;
 };
 
-export default function ModalItem() {
+type Props = {
+  onClose: () => void;
+};
+
+export default function ModalItem(props: Props) {
+  const { onClose } = props;
+
+  const dispatch = useAppDispatch();
+  const { form: formInStorage } = useAppSelector((state: any) => state.post);
+
   const [form, setForm] = React.useState({ date: "", keyword: "" });
   const [checkedById, setCheckedById] = React.useState<Set<number>>(new Set());
 
@@ -43,10 +57,18 @@ export default function ModalItem() {
   };
 
   const handleFormSubmit = () => {
-    console.log();
-  };
+    const formatCheckedById = [...checkedById].map((val) => COUNTRY_TYPE[val]);
+    const baseCheckedById = [...formatCheckedById].join(", ");
 
-  console.log(checkedById, "checkedById ?");
+    const formatForm = {
+      beginDate: form.date ? form.date : toStringByFormatting(new Date(0), "-"),
+      endDate: form.date ? form.date : toStringByFormatting(new Date(), "-"),
+      keyword: form.keyword,
+      country: baseCheckedById ? baseCheckedById : COUNTRY_TYPE.all,
+    };
+    dispatch(setFormState({ ...formInStorage, ...formatForm }));
+    onClose();
+  };
 
   return (
     <section className="flex flex-col justify-between w-full h-[480px] p-[20px]">

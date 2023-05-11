@@ -17,13 +17,17 @@ export default function ScrapPage() {
     updateCheckInLocalStorage(item);
   };
 
+  const handleHeaderClick = () => {
+    // setIsOpen(true);
+  };
+
   React.useEffect(() => {
     setFilterData(data);
   }, [data]);
 
   return (
     <main className={`flex flex-col mx-auto w-full h-[calc(100%-85px)]`}>
-      <Header />
+      <Header onClick={handleHeaderClick} />
       <section className="flex flex-col w-full h-full px-[20px] py-[20px] gap-[8px] overflow-auto">
         {filterData &&
           filterData.map((item: DataType) => (
