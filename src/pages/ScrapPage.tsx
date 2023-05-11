@@ -5,6 +5,8 @@ import Header from "../components/Header";
 import PostCard from "../components/PostCard";
 import ModalWrapper from "../components/modal/ModalWrapper";
 import ModalItem from "../components/modal/ModalItem";
+import NotFoundResult from "../components/NotFoundResult";
+
 // zustand
 import { useScrapStore } from "../zustand/store";
 // types
@@ -42,6 +44,8 @@ export default function ScrapPage() {
     setFilterData(filterData);
   }, [data, scrapForm]);
 
+  console.log(check, "check ?");
+
   return (
     <main className={`flex flex-col mx-auto w-full h-[calc(100%-85px)]`}>
       {isOpen && (
@@ -57,15 +61,20 @@ export default function ScrapPage() {
       )}
       <Header onClick={() => setIsOpen(true)} mode={MODE_TYPE.scrap} />
       <section className="flex flex-col w-full h-full px-[20px] py-[20px] gap-[8px] overflow-auto">
-        {filterData &&
-          filterData.map((item: DataType) => (
-            <PostCard
-              key={item.id}
-              item={item}
-              onStarClick={handleStarIconClick}
-              onCheckedById={new Set(check)}
-            />
-          ))}
+        {check?.length ? (
+          <>
+            {filterData.map((item: DataType) => (
+              <PostCard
+                key={item.id}
+                item={item}
+                onStarClick={handleStarIconClick}
+                onCheckedById={new Set(check)}
+              />
+            ))}
+          </>
+        ) : (
+          <NotFoundResult />
+        )}
       </section>
     </main>
   );

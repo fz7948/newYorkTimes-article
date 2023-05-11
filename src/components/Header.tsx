@@ -51,7 +51,7 @@ export default function Header(props: Props) {
         label={
           isCountryFilter
             ? formatCountry.length === 1
-              ? formatCountry[0]
+              ? `${KOREA_COUNTRY_TYPE[formatCountry[0]]}`
               : `${KOREA_COUNTRY_TYPE[formatCountry[0]]} 외 ${
                   formatCountry.length
                 }개`
