@@ -4,7 +4,7 @@ import { FormType } from "../types";
 // utils
 import { toStringByFormatting } from "../utils";
 
-const API_KEY = "H7pMstaRIeiCReC8iOH52IFKmYFTUcZV";
+const API_KEY = "DC8ivFuYTXoIY0CvVW264F6Q6XO4RqpE";
 
 type Props = {
   form: FormType;

@@ -5,9 +5,9 @@ import cx from "classnames";
 import BaseCalendar from "../calendar/BaseCalendar";
 import TextInput from "../input/TextInput";
 // constant
-import { COUNTRY_TYPE, KOREA_COUNTRY_TYPE } from "../../constant";
+import { COUNTRY_TYPE, KOREA_COUNTRY_TYPE, MODE_TYPE } from "../../constant";
 // redux
-import { setFormState } from "../../redux/postSlice";
+import { setHomeFormState, setScrapFormState } from "../../redux/postSlice";
 // utils
 import { toStringByFormatting, formatCountryToArray } from "../../utils";
 
@@ -25,13 +25,16 @@ type FormType = {
 
 type Props = {
   onClose: () => void;
+  mode: string;
 };
 
 export default function ModalItem(props: Props) {
-  const { onClose } = props;
+  const { onClose, mode } = props;
 
   const dispatch = useAppDispatch();
-  const { form: formInStorage } = useAppSelector((state: any) => state.post);
+  const { homeForm, scrapForm } = useAppSelector((state: any) => state.post);
+
+  const isHomeFormMode = mode === MODE_TYPE.home ? homeForm : scrapForm;
 
   const [form, setForm] = React.useState({ date: "", keyword: "" });
   const [checkedById, setCheckedById] = React.useState<Set<string>>(new Set());
@@ -66,27 +69,32 @@ export default function ModalItem(props: Props) {
       keyword: form.keyword,
       country: baseCheckedById ? baseCheckedById : COUNTRY_TYPE.all,
     };
-    dispatch(setFormState({ ...formInStorage, ...formatForm }));
+    if (mode === MODE_TYPE.home) {
+      dispatch(setHomeFormState({ ...isHomeFormMode, ...formatForm }));
+    }
+    if (mode === MODE_TYPE.scrap) {
+      dispatch(setScrapFormState({ ...isHomeFormMode, ...formatForm }));
+    }
     onClose();
   };
 
   React.useEffect(() => {
-    const isAllDate = formInStorage.beginDate === "1970-01-01";
-    const isAllCountry = formInStorage.country === "*";
+    const isAllDate = isHomeFormMode.beginDate === "1970-01-01";
+    const isAllCountry = isHomeFormMode.country === "*";
 
     let countryList = [] as string[];
 
     if (!isAllCountry) {
-      countryList = formatCountryToArray(formInStorage.country);
+      countryList = formatCountryToArray(isHomeFormMode.country);
     }
 
     setForm({
       ...form,
-      keyword: formInStorage.keyword,
-      date: isAllDate ? "" : formInStorage.beginDate,
+      keyword: isHomeFormMode.keyword,
+      date: isAllDate ? "" : isHomeFormMode.beginDate,
     });
     setCheckedById(new Set(countryList));
-  }, [formInStorage]);
+  }, [isHomeFormMode]);
 
   return (
     <section className="flex flex-col justify-between w-full h-[480px] p-[20px]">

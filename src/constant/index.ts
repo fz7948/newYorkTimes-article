@@ -20,3 +20,8 @@ export const KOREA_COUNTRY_TYPE: { [key: string]: string } = {
   france: "프랑스",
   united_kingdom: "영국",
 } as const;
+
+export const MODE_TYPE = {
+  home: "home",
+  scrap: "scrap",
+} as const;

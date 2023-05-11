@@ -13,7 +13,7 @@ const HEADER_BUTTON_CLASS = [
   "text-[13px]",
   "truncate",
   "justify-center",
-  "max-w-[33%]",
+  "max-w-[120px]",
 ];
 
 type Props = {

@@ -7,34 +7,32 @@ import HeaderButton from "../components/button/HeaderButton";
 //utils
 import { toStringByFormatting, formatCountryToArray } from "../utils";
 // content
-import { KOREA_COUNTRY_TYPE } from "../constant";
+import { KOREA_COUNTRY_TYPE, MODE_TYPE } from "../constant";
 
 type Props = {
   onClick: () => void;
+  mode: string;
 };
 
 export default function Header(props: Props) {
-  const { onClick } = props;
+  const { onClick, mode } = props;
 
-  const { form: formInStorage } = useAppSelector((state) => state.post);
+  const { homeForm, scrapForm } = useAppSelector((state) => state.post);
 
-  const isHeadlineFilter = !!formInStorage.keyword;
-  const isDateFilter = formInStorage.beginDate !== "1970-01-01";
-  const isCountryFilter = formInStorage.country !== "*";
+  const isHomeFormMode = mode === MODE_TYPE.home ? homeForm : scrapForm;
 
-  console.log(isHeadlineFilter, isDateFilter, isCountryFilter);
+  const isHeadlineFilter = !!isHomeFormMode.keyword;
+  const isDateFilter = isHomeFormMode.beginDate !== "1970-01-01";
+  const isCountryFilter = isHomeFormMode.country !== "*";
 
-  console.log(formInStorage.country, "formInStorage.country ?");
-  const test = formatCountryToArray(formInStorage.country);
-
-  console.log(test, "test ?");
+  const formatCountry = formatCountryToArray(isHomeFormMode.country);
 
   return (
     <section className="flex w-full h-[60px] px-[20px] py-[13px] gap-[7px] border-b-[2px] bg-white">
       <HeaderButton
         onClick={onClick}
         iconElement={<SearchIcon />}
-        label={isHeadlineFilter ? formInStorage.keyword : "전체 헤드라인"}
+        label={isHeadlineFilter ? isHomeFormMode.keyword : "전체 헤드라인"}
         active={isHeadlineFilter}
         isTruncate
       />
@@ -43,7 +41,7 @@ export default function Header(props: Props) {
         iconElement={<CalendarIcon />}
         label={
           isDateFilter
-            ? toStringByFormatting(new Date(formInStorage.beginDate), ".")
+            ? toStringByFormatting(new Date(isHomeFormMode.beginDate), ".")
             : "전체 날짜"
         }
         active={isDateFilter}
@@ -52,9 +50,11 @@ export default function Header(props: Props) {
         onClick={onClick}
         label={
           isCountryFilter
-            ? test.length === 1
-              ? test[0]
-              : `${KOREA_COUNTRY_TYPE[test[0]]} 외 ${test.length}개`
+            ? formatCountry.length === 1
+              ? formatCountry[0]
+              : `${KOREA_COUNTRY_TYPE[formatCountry[0]]} 외 ${
+                  formatCountry.length
+                }개`
             : "전체 국가"
         }
         active={isCountryFilter}

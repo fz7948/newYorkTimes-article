@@ -10,7 +10,8 @@ import { toStringByFormatting } from "../utils";
 
 export interface IPostsInStorage {
   data: DocsInterface[] | undefined;
-  form: FormType;
+  homeForm: FormType;
+  scrapForm: FormType;
   loading: boolean;
   error: string | undefined;
 }
@@ -29,7 +30,8 @@ export const formInitialState = {
 
 export const initialState: IPostsInStorage = {
   data: [],
-  form: formInitialState,
+  homeForm: formInitialState,
+  scrapForm: formInitialState,
   loading: false,
   error: undefined,
 };
@@ -46,8 +48,11 @@ export const postSlice = createSlice({
   name: "post",
   initialState,
   reducers: {
-    setFormState: (state, action) => {
-      state.form = action.payload;
+    setHomeFormState: (state, action) => {
+      state.homeForm = action.payload;
+    },
+    setScrapFormState: (state, action) => {
+      state.scrapForm = action.payload;
     },
   },
   extraReducers: {
@@ -68,6 +73,6 @@ export const postSlice = createSlice({
   },
 });
 
-export const { setFormState } = postSlice.actions;
+export const { setHomeFormState, setScrapFormState } = postSlice.actions;
 
 export default postSlice.reducer;

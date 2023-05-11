@@ -16,12 +16,13 @@ import { DataType } from "../types";
 import { getPostsInStorage } from "../redux/postSlice";
 // zustand
 import { useScrapStore } from "../zustand/store";
+import { MODE_TYPE } from "../constant";
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
   const {
     loading,
-    form: formInStorage, //
+    homeForm: formInStorage, //
   } = useAppSelector((state) => state.post);
   const { check, updateCheckInLocalStorage } = useScrapStore();
 
@@ -66,10 +67,18 @@ export default function HomePage() {
       {isOpen && (
         <ModalWrapper
           onClose={() => setIsOpen(false)}
-          children={<ModalItem onClose={() => setIsOpen(false)} />}
+          children={
+            <ModalItem
+              onClose={() => setIsOpen(false)}
+              mode={MODE_TYPE.home} //
+            />
+          }
         />
       )}
-      <Header onClick={() => setIsOpen(true)} />
+      <Header
+        onClick={() => setIsOpen(true)}
+        mode={MODE_TYPE.home} //
+      />
       <PostContainer
         target={target}
         data={clientData}
