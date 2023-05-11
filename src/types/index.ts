@@ -21,6 +21,7 @@ export type DataType = {
   headline: string;
   journalist: string;
   source: string;
+  web_url: string;
 };
 
 type KeywordType = {

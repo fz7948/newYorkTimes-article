@@ -44,7 +44,7 @@ export default function ScrapPage() {
     setFilterData(filterData);
   }, [data, scrapForm]);
 
-  console.log(check, "check ?");
+  console.log(data, "data ?");
 
   return (
     <main className={`flex flex-col mx-auto w-full h-[calc(100%-85px)]`}>

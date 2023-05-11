@@ -7,6 +7,7 @@ const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 //components
 import Loading from "./components/Loading";
 import Navigation from "./components/Navigation";
+import Redirect from "./components/Redirect";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/scrap" element={<ScrapPage />} />
+            <Route path="/redirect" element={<Redirect />} />
             <Route path="/*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>

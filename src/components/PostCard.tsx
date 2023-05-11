@@ -1,6 +1,8 @@
 // types
 import { DataType } from "../types";
 // utils
+import { useNavigate } from "react-router-dom";
+// utils
 import { toStringByFormatting, getDayOfWeek } from "../utils";
 //icons
 import StarIcon from "../components/icon/StarIcon";
@@ -12,7 +14,8 @@ type Props = {
 };
 
 export default function PostCard({ item, onStarClick, onCheckedById }: Props) {
-  const { id, date, headline, journalist, source } = item;
+  const { id, date, headline, journalist, source, web_url } = item;
+  const navigate = useNavigate();
 
   return (
     <section
@@ -20,7 +23,10 @@ export default function PostCard({ item, onStarClick, onCheckedById }: Props) {
       className="flex flex-col justify-between w-full h-[104px] rounded-[8px] px-[20px] py-[10px] bg-white"
     >
       <div className="flex w-full">
-        <div className="w-full h-[56px] line-clamp-2 text-[18px] font-[600]">
+        <div
+          className="w-full h-[56px] line-clamp-2 text-[18px] font-[600]"
+          onClick={() => navigate("/redirect", { state: { url: web_url } })}
+        >
           {headline}
         </div>
         <button

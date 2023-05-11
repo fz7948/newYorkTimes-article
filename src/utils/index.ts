@@ -1,4 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
+// types
+import { DataType, DocsInterface } from "../types";
 
 const leftPad = (value: number) => {
   if (value >= 10) {
@@ -22,32 +24,37 @@ export const getDayOfWeek = (source: Date) => {
   return dayOfWeek;
 };
 
-export const formatArticlesearchApi = (docs: any) => {
+export const formatArticlesearchApi = (docs: DocsInterface[]): DataType[] => {
   if (!docs) return [];
 
-  const newDocs = docs.reduce((res: any, cur: any) => {
-    const {
-      byline: { person },
-      headline: { main },
-      pub_date,
-      source,
-    } = cur;
-
-    const personFullName = person.length
-      ? `${person[0].firstname} ${person[0].lastname}`
-      : "";
-
-    return [
-      ...res,
-      {
-        id: uuidv4(),
-        journalist: personFullName,
-        headline: main,
-        date: new Date(pub_date),
+  const newDocs = docs.reduce(
+    (res: DocsInterface[], cur: DocsInterface): any => {
+      const {
+        byline: { person = [] },
+        headline: { main },
+        pub_date,
         source,
-      },
-    ];
-  }, []);
+        web_url,
+      } = cur;
+
+      const personFullName = person.length
+        ? `${person[0].firstname} ${person[0].lastname}`
+        : "";
+
+      return [
+        ...res,
+        {
+          id: uuidv4(),
+          journalist: personFullName,
+          headline: main,
+          date: new Date(pub_date),
+          source,
+          web_url,
+        },
+      ];
+    },
+    [],
+  );
   return newDocs;
 };
 
