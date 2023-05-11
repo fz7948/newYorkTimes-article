@@ -10,7 +10,7 @@ export const COUNTRY_TYPE: { [key: string]: string } = {
   united_kingdom: "UNITED KINGDOM",
 } as const;
 
-export const KOREA_COUNTRY_TYPE = {
+export const KOREA_COUNTRY_TYPE: { [key: string]: string } = {
   south_korea: "대한민국",
   china: "중국",
   japan: "일본",

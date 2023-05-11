@@ -19,9 +19,10 @@ import { useScrapStore } from "../zustand/store";
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
-  const { loading, form: formInStorage } = useAppSelector(
-    (state) => state.post,
-  );
+  const {
+    loading,
+    form: formInStorage, //
+  } = useAppSelector((state) => state.post);
   const { check, updateCheckInLocalStorage } = useScrapStore();
 
   const [clientData, setClientData] = React.useState<DataType[]>([]);

@@ -36,7 +36,7 @@ export default function PostCard({ item, onStarClick, onCheckedById }: Props) {
           <div className="flex-1 text-[12px] truncate">{source}</div>
           <div className="flex-1 text-[12px] truncate">{journalist}</div>
         </div>
-        <div className="flex w-[85px] text-[12px] text-[#6D6D6D] truncate">
+        <div className="flex w-[87px] text-[12px] text-[#6D6D6D] truncate">
           {`${toStringByFormatting(new Date(date), ".")} (${getDayOfWeek(
             new Date(date),
           )})`}

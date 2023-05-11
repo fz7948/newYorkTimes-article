@@ -16,11 +16,11 @@ export const toStringByFormatting = (source: Date, delimiter = "") => {
   return [year, month, day].join(delimiter);
 };
 
-export function getDayOfWeek(source: Date) {
+export const getDayOfWeek = (source: Date) => {
   const week = ["일", "월", "화", "수", "목", "금", "토"];
   const dayOfWeek = week[source.getDay()];
   return dayOfWeek;
-}
+};
 
 export const formatArticlesearchApi = (docs: any) => {
   if (!docs) return [];
@@ -49,4 +49,10 @@ export const formatArticlesearchApi = (docs: any) => {
     ];
   }, []);
   return newDocs;
+};
+
+export const formatCountryToArray = (source: string): string[] => {
+  return source.split(",").map((item: string) => {
+    return item.trim().toLocaleLowerCase().replaceAll(" ", "_");
+  });
 };

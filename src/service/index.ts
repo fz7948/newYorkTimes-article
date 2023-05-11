@@ -13,6 +13,7 @@ type Props = {
 
 export async function getArticlesearchApi(props: Props) {
   const { form, page } = props;
+
   try {
     const response = await axios(
       `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${

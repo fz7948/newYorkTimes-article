@@ -9,7 +9,7 @@ import { COUNTRY_TYPE, KOREA_COUNTRY_TYPE } from "../../constant";
 // redux
 import { setFormState } from "../../redux/postSlice";
 // utils
-import { toStringByFormatting } from "../../utils";
+import { toStringByFormatting, formatCountryToArray } from "../../utils";
 
 const COUNTRY_BUTTON_CLASS = [
   "px-3",
@@ -34,7 +34,7 @@ export default function ModalItem(props: Props) {
   const { form: formInStorage } = useAppSelector((state: any) => state.post);
 
   const [form, setForm] = React.useState({ date: "", keyword: "" });
-  const [checkedById, setCheckedById] = React.useState<Set<number>>(new Set());
+  const [checkedById, setCheckedById] = React.useState<Set<string>>(new Set());
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -69,6 +69,24 @@ export default function ModalItem(props: Props) {
     dispatch(setFormState({ ...formInStorage, ...formatForm }));
     onClose();
   };
+
+  React.useEffect(() => {
+    const isAllDate = formInStorage.beginDate === "1970-01-01";
+    const isAllCountry = formInStorage.country === "*";
+
+    let countryList = [] as string[];
+
+    if (!isAllCountry) {
+      countryList = formatCountryToArray(formInStorage.country);
+    }
+
+    setForm({
+      ...form,
+      keyword: formInStorage.keyword,
+      date: isAllDate ? "" : formInStorage.beginDate,
+    });
+    setCheckedById(new Set(countryList));
+  }, [formInStorage]);
 
   return (
     <section className="flex flex-col justify-between w-full h-[480px] p-[20px]">

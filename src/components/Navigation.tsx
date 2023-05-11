@@ -20,7 +20,7 @@ export default function Navigation() {
 
   return (
     <footer
-      className={`flex absolute bottom-0 items-center justify-around w-full h-[85px] bg-[#000000] rounded-[30px] z-50`}
+      className={`flex absolute bottom-0 max-w-screen-sm items-center justify-around w-full h-[85px] bg-[#000000] rounded-[30px] z-50`}
     >
       {menu.map((item) => (
         <NavigationButton
