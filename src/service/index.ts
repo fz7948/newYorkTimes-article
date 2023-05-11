@@ -4,7 +4,7 @@ import { FormType } from "../types";
 // utils
 import { toStringByFormatting } from "../utils";
 
-const API_KEY = "Bn2ldE3pKPUQ7uwPzw9k4i2BtCzq8SLp";
+const API_KEY = "H7pMstaRIeiCReC8iOH52IFKmYFTUcZV";
 
 export async function getArticlesearchApi(form: FormType) {
   try {

@@ -10,12 +10,14 @@ export default function useIntersectionObserver(callback: () => void) {
           }
         });
       },
-      { threshold: 1 },
+      { threshold: 0.5 },
     ),
   );
 
-  const observe = (element: Element) => {
-    observer.current.observe(element);
+  const observe = (element: Element | undefined) => {
+    if (element) {
+      observer.current.observe(element);
+    }
   };
 
   const unobserve = (element: Element) => {
