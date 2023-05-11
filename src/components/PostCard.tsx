@@ -7,9 +7,11 @@ import StarIcon from "../components/icon/StarIcon";
 
 type Props = {
   item: DataType;
+  onStarClick: (id: DataType) => void;
+  onCheckedById?: Set<string>;
 };
 
-export default function PostCard({ item }: Props) {
+export default function PostCard({ item, onStarClick, onCheckedById }: Props) {
   const { id, date, headline, journalist, source } = item;
 
   return (
@@ -24,8 +26,9 @@ export default function PostCard({ item }: Props) {
         <button
           type="button"
           className="flex justify-center items-center w-[22px] h-[22px]"
+          onClick={() => (onStarClick ? onStarClick(item) : null)}
         >
-          <StarIcon active={false} />
+          <StarIcon active={onCheckedById ? onCheckedById.has(id) : true} />
         </button>
       </div>
       <div className="flex justify-between items-center w-full h-full">
@@ -34,7 +37,9 @@ export default function PostCard({ item }: Props) {
           <div className="flex-1 text-[12px] truncate">{journalist}</div>
         </div>
         <div className="flex w-[85px] text-[12px] text-[#6D6D6D] truncate">
-          {`${toStringByFormatting(date, ".")} (${getDayOfWeek(date)})`}
+          {`${toStringByFormatting(new Date(date), ".")} (${getDayOfWeek(
+            new Date(date),
+          )})`}
         </div>
       </div>
     </section>
