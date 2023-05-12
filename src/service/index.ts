@@ -4,8 +4,6 @@ import { FormType } from "../types";
 // utils
 import { toStringByFormatting } from "../utils";
 
-const API_KEY = "DC8ivFuYTXoIY0CvVW264F6Q6XO4RqpE";
-
 type Props = {
   form: FormType;
   page: number;
@@ -22,9 +20,9 @@ export async function getArticlesearchApi(props: Props) {
         form.country
       })&page=${page}&begin_date=${toStringByFormatting(
         new Date(form.beginDate),
-      )}&end_date=${toStringByFormatting(
-        new Date(form.endDate),
-      )}&api-key=${API_KEY}`,
+      )}&end_date=${toStringByFormatting(new Date(form.endDate))}&api-key=${
+        process.env.REACT_APP_ARTICLE_SEARCH_KEY
+      }`,
     ).then((res) => res);
 
     return response.data.response.docs;
